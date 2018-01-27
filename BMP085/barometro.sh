@@ -1,7 +1,6 @@
 #!bin/sh
-cd Adafruit_BMP085/
 #while true; do
 #	sleep 300
-	sudo python barometro.py
+	sudo python /home/pi/source/BMP085-raspberry/BMP085/Adafruit_BMP085/barometro.py
 #done
 #sudo reboot
