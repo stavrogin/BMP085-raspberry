@@ -18,14 +18,17 @@ bmp = BMP085(0x77)
 
 temp = bmp.readTemperature()
 pressure = bmp.readPressure()
-altitude = bmp.readAltitude()
+#https://www.raspberrypi.org/forums/viewtopic.php?p=479204#p479204
+#pressure increases roughly 110 every 100m, altitude is calculated at the sea level
+altitude = bmp.readAltitude(pressure + 700)
 
+#if relevations go wrong..
 if temp < 0 :
 	temp = bmp.readTemperature()
 if pressure < 0 :
 	pressure = bmp.readPressure()
 if altitude < 0 :
-	altitude = bmp.readAltitude()
+	altitude = bmp.readAltitude(pressure + 700)
 
 tempCelsius = temp
 pressurehPa = pressure / 100.0
@@ -55,8 +58,8 @@ body = {
 }
 
 import json
-response = requests.post('http://192.168.1.2:8081/weatherdata', headers=headers, data=json.dumps(body))
+response = requests.post('http://192.168.1.23:8080/meteo/weatherdata', headers=headers, data=json.dumps(body))
 print response.status_code
-print response.encoding
+#print response.encoding
 print response.text
-print response.json()
+#print response.json()
