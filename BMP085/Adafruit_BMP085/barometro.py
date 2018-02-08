@@ -58,8 +58,17 @@ body = {
 }
 
 import json
-response = requests.post('http://192.168.1.23:8080/meteo/weatherdata', headers=headers, data=json.dumps(body))
-print response.status_code
-#print response.encoding
-print response.text
-#print response.json()
+try:
+	response = requests.post('http://192.168.1.23:8080/meteo/weatherdata', headers=headers, data=json.dumps(body))
+	print response.status_code
+	print response.text
+except:
+	print "Error: maybe host 192.168.1.23 is unreachable..."
+
+try:
+	response = requests.post('http://192.168.1.24:8080/meteo/weatherdata', headers=headers, data=json.dumps(body))
+	print response.status_code
+	print response.text
+except:
+	print "Error: maybe host 192.168.1.23 is unreachable..."
+
