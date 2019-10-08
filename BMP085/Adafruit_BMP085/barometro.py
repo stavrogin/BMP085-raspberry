@@ -22,7 +22,7 @@ pressure = bmp.readPressure()
 #pressure increases roughly 110 every 100m, altitude is calculated at the sea level
 altitude = bmp.readAltitude(pressure + 700)
 
-#if relevations go wrong..
+#if relevations go wrong retry just another time..
 if temp < 0 :
 	temp = bmp.readTemperature()
 if pressure < 0 :
@@ -45,6 +45,9 @@ print "Altitude:    %.2f m" % altitudem
 
 import requests
 
+import time
+millis = int(round(time.time() * 1000))
+
 headers = {
     'Content-Type': 'application/json',
     'Accept': "application/json"
@@ -54,10 +57,19 @@ body = {
 	"altitude": altitudem,
 	"temperature": tempCelsius,
 	"pressure": pressurehPa,
-	"datasourceId": 1
+	"datasource": "app"
+        "ts": millis
 }
 
 import json
+
+try:
+	response = requests.post('https://raspifla.herokuapp.com/meteo/weatherdata', headers=headers, data=json.dumps(body))
+	print response.status_code
+	print response.text
+except:
+	print "Error: maybe https://raspifla.herokuapp.com/meteo/weatherdata is unreachable..."
+
 try:
 	response = requests.post('http://192.168.1.23:8080/meteo/weatherdata', headers=headers, data=json.dumps(body))
 	print response.status_code
