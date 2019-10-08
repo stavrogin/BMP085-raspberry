@@ -57,7 +57,7 @@ body = {
 	"altitude": altitudem,
 	"temperature": tempCelsius,
 	"pressure": pressurehPa,
-	"datasource": "app"
+	"datasource": "app",
         "ts": millis
 }
 
@@ -67,6 +67,7 @@ try:
 	response = requests.post('https://raspifla.herokuapp.com/meteo/weatherdata', headers=headers, data=json.dumps(body))
 	print response.status_code
 	print response.text
+	print "Data sent to https://raspifla.herokuapp.com/meteo/weatherdata"
 except:
 	print "Error: maybe https://raspifla.herokuapp.com/meteo/weatherdata is unreachable..."
 
@@ -74,6 +75,7 @@ try:
 	response = requests.post('http://192.168.1.23:8080/meteo/weatherdata', headers=headers, data=json.dumps(body))
 	print response.status_code
 	print response.text
+	print "Data sent to 192.168.1.23"
 except:
 	print "Error: maybe host 192.168.1.23 is unreachable..."
 
@@ -81,6 +83,7 @@ try:
 	response = requests.post('http://192.168.1.24:8080/meteo/weatherdata', headers=headers, data=json.dumps(body))
 	print response.status_code
 	print response.text
+	print "Data sent to 192.168.1.24"
 except:
-	print "Error: maybe host 192.168.1.23 is unreachable..."
+	print "Error: maybe host 192.168.1.24 is unreachable..."
 
